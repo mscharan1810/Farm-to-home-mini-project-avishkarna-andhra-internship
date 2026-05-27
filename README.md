@@ -59,17 +59,44 @@ RAZORPAY_KEY_SECRET=...
 CLIENT_URL=http://localhost:5173
 ```
 
+## How to Use the Application
+
+### 1. Home Page & Browsing
+The application opens to a beautifully designed homepage featuring an Indian agricultural aesthetic. Consumers can browse fresh produce easily.
+![Home Page](screenshots/home.png)
+
+### 2. Authentication
+Consumers and Farmers share a unified login page.
+![Login Page](screenshots/login.png)
+- **Farmers**: Can log in using their registered email and password to access the Farmer Dashboard.
+- **Consumers**: Can register a new account or log in to start buying.
+
+### 3. Purchasing Products (Consumer)
+Consumers can browse the diverse selection of products categorized by Indian names and filter by organic status or category.
+![Products Page](screenshots/products.png)
+- Select the quantity you want.
+- Add products to your Cart.
+- Check out quickly using Cash on Delivery (COD).
+- View your **My Orders** page directly from the navbar!
+
+### 4. Managing the Farm (Farmer)
+Farmers are automatically redirected to their dedicated dashboard.
+![Farmer Dashboard](screenshots/farmer_dashboard.png)
+- **My Products**: Add new products, specifying their categories, prices, and even setting the appropriate unit (like Litres for milk or Kilograms for vegetables).
+- **Current Orders**: View and manage the status of all active orders placed by consumers. Update statuses from "Pending" to "Out for Delivery".
+- **Delivered Orders**: A dedicated view for successfully fulfilled orders.
+- **Messages**: Chat in real-time with consumers who are interested in your products!
+
 ## Features
 
 - JWT auth with 3 roles (consumer / farmer / admin)
 - Product CRUD with multi-image Cloudinary upload
-- Cart, wishlist, COD + Razorpay checkout
-- Orders with status timeline
-- Reviews & ratings
-- Real-time chat (Socket.IO) between farmer & consumer
-- Admin dashboard (user/product/order management)
+- Cart, wishlist, and fully functional Cash on Delivery
+- Consumer and Farmer dedicated Order workflows
+- Live real-time chat (Socket.IO) between farmer & consumer
 - Search, filter, sort, pagination
 - Responsive UI with Indian agricultural theme (sage / cream)
+- Instant Translation functionality via Google Translate
 
 ## API Endpoints
 
