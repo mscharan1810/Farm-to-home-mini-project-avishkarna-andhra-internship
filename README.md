@@ -4,9 +4,9 @@ Full-stack MERN agricultural e-commerce platform connecting farmers directly wit
 
 ## Tech Stack
 
-**Frontend:** React 18, React Router DOM v6, Axios, Context API, Vite, Socket.IO Client
-**Backend:** Node.js, Express, MongoDB, Mongoose, JWT, bcryptjs, Multer, Cloudinary, Socket.IO
-**Payments:** Razorpay (test keys)
+- **Core Technologies:** ReactJS, Node.js, Express.js, MongoDB, HTML5, CSS3
+- **Additional Tools:** Socket.IO (Real-time chat), JWT (Authentication), Mongoose, Vite
+- **Third-Party Services:** Cloudinary (Image Hosting), Razorpay (Payments/COD logic)
 
 ## Project Structure
 
