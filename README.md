@@ -11,15 +11,8 @@ Want to test the platform quickly without registering? Use these pre-configured 
 *   *Sai Charan*: sai@gmail.com
 *   *Test User*: testuser@example.com
 
-### 🌾 Farmer Accounts (Sellers)
-*   *Rattaiah*: rattaiah@farmer.com
-*   *Kiran*: kiran@farmer.com
-*   *Ramesh*: ramesh@farmer.com
-*   *Suresh*: suresh@farmer.com
-*   *Srinivas*: srinivas@farmer.com
+### 🌾 Farmer Account (Seller)
 *   *Demo Farmer*: farmer@demo.com
-*   *Rattaiah* (Original): rattaiah@gmail.com
-*   *Ravi*: ravi@gmail.com
 
 *Password:* password123
 
