@@ -52,29 +52,29 @@ A dedicated, secure management panel strictly accessible by verified farmers.
 
 ---
 
-## Core Features
+## 🌟 Present Project Features (Fully Implemented)
 
-### 1. Dual-Role Architecture (Role-Based Access Control)
-* **Consumer Portal:** Browse and search fresh farm products, filter by categories, view detailed information, add to cart, and track order status securely.
-* **Farmer Dashboard:** Add new products with images, descriptions, and pricing, manage inventory, and update order fulfillment status for incoming customer orders.
+### 🧑‍🌾 Consumer (Buyer) Features
+* **Smart Marketplace:** Browse and search fresh farm products with advanced filtering by categories (Vegetables, Fruits, Dairy, etc.) and search by keywords.
+* **Product Details & Reviews:** View comprehensive product information, farmer details, available stock, and read real customer reviews before buying.
+* **Shopping Cart & Wishlist:** Manage items in a dynamic cart with automatic subtotal calculations. Save favorite items to a personalized Wishlist for later.
+* **FarmPass Subscriptions:** Premium membership offering benefits like a 10% discount on all purchases and free delivery on eligible orders.
+* **Advanced Checkout System:** Seamless, multi-step checkout process with delivery fee calculations and order confirmation.
+* **Complete Order Tracking:** Dedicated pages to view complete order history (`My Orders`) and track current, real-time status of active orders (`Order Details`).
+* **Real-Time Direct Chat:** Built-in Socket.io messaging allowing consumers to chat *directly* with the farmers to ask about produce freshness or delivery.
+* **Multilingual Support:** Integrated Google Translate to allow users to browse the marketplace in their preferred local language.
 
-### 2. Secure Authentication and Authorization
-* Secure user authentication using JSON Web Tokens (JWT).
-* Separate registration and login systems for Consumers and Farmers.
-* Protected routes to prevent unauthorized access.
+### 🚜 Farmer (Seller) Features
+* **Dedicated Farmer Dashboard:** A specialized, secure management panel showing a high-level overview of total earnings, pending orders, and total products.
+* **Inventory Management:** Full CRUD (Create, Read, Update, Delete) capabilities. Farmers can easily add new products, upload images, set pricing, and edit stock levels.
+* **Order Processing System:** View incoming orders specifically for their products. Farmers can update the fulfillment status (Pending -> Processing -> Shipped -> Delivered) to keep customers informed.
+* **Profile Management:** Farmers can manage their public profiles, ensuring customers know who is growing their food.
 
-### 3. Advanced Shopping Cart and Checkout System
-* Dynamic shopping cart with automatic subtotal calculations.
-* Quantity management and delivery fee calculations.
-* Premium **FarmPass Membership** benefits, offering a 10% discount on purchases and free delivery on eligible orders.
-
-### 4. Real-Time Chat System
-* Built using **Socket.io** for instant communication.
-* Direct messaging between consumers and farmers to inquire about product freshness, farming practices, and delivery details.
-
-### 5. Comprehensive Order Management
-* **Consumer:** View complete order history, track current status, and receive updates.
-* **Farmer:** Receive notifications for new orders, manage processing, and update statuses (Pending, Processing, Shipped, Delivered).
+### 🛡️ System & Architecture Features
+* **Dual-Role Authentication:** Secure user authentication using JSON Web Tokens (JWT) with strict Role-Based Access Control (RBAC) separating Consumers from Farmers.
+* **Cloud Media Storage:** Direct integration with Cloudinary for secure, fast, and scalable product image uploads.
+* **Real-Time Infrastructure:** Node.js backend using Socket.io to push live updates for chat and order notifications.
+* **Responsive Modern UI:** Built with React.js and Vite, utilizing a mobile-first Vanilla CSS approach for incredibly fast performance and fluid animations.
 
 ---
 
