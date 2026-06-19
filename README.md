@@ -7,8 +7,7 @@ The application is built using the MERN stack (MongoDB, Express.js, React.js, No
 ## 🚀 Live Demo Credentials
 Want to test the platform quickly without registering? Use these pre-configured demo accounts to explore different roles:
 
-### 🛒 Consumer Accounts (Buyers)
-*   *Sai Charan*: sai@gmail.com
+### 🛒 Consumer Account (Buyer)
 *   *Test User*: testuser@example.com
 
 ### 🌾 Farmer Account (Seller)
