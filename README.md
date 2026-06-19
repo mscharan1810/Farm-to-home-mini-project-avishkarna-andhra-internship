@@ -4,6 +4,22 @@
 
 The application is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) and provides a seamless shopping experience for customers along with efficient inventory and order management tools for farmers. By fostering direct farmer-to-consumer interactions, the platform promotes fair pricing, sustainable agriculture, and stronger local farming communities.
 
+## 🚀 Live Demo Credentials
+Want to test the platform quickly without registering? Use these pre-configured demo accounts:
+
+**Consumer Account:**
+* **Email:** `user@demo.com` *(or easily register your own)*
+* **Password:** `password123`
+
+**Farmer Accounts (Try different ones to see specific products!):**
+* **General Demo:** `farmer@demo.com`
+* **Vegetables & Organics:** `rattaiah@farmer.com`
+* **Fruits:** `kiran@farmer.com`
+* **Dairy:** `suresh@farmer.com`
+* **Password (for all farmers):** `password123`
+
+---
+
 ## Core Features
 
 ### 1. Dual-Role Architecture (Role-Based Access Control)
