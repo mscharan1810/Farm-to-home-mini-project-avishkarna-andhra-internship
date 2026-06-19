@@ -23,14 +23,12 @@ export default function Subscriptions() {
   }, []);
 
   const cancelSubscription = async (id) => {
-    if (window.confirm("Are you sure you want to cancel this subscription?")) {
-      try {
-        await api.put(`/orders/cancel/${id}`);
-        toast.success("Subscription cancelled successfully");
-        loadSubs();
-      } catch (err) {
-        toast.error("Failed to cancel subscription");
-      }
+    try {
+      await api.put(`/orders/cancel/${id}`);
+      toast.success("Subscription cancelled successfully");
+      loadSubs();
+    } catch (err) {
+      toast.error("Failed to cancel subscription");
     }
   };
 
@@ -40,9 +38,7 @@ export default function Subscriptions() {
   };
 
   const handleCancelPremium = async () => {
-    if (window.confirm("Are you sure you want to cancel your FarmPass membership? You will lose free delivery and your 10% discount.")) {
-      await cancelPremium();
-    }
+    await cancelPremium();
   };
 
   if (loading || authLoading) return <div className="container section">Loading subscriptions...</div>;
