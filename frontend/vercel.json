@@ -1,3 +1,8 @@
 {
-  "name": "farm-to-home"
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
