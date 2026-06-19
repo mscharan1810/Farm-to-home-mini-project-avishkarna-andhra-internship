@@ -7,16 +7,23 @@ The application is built using the MERN stack (MongoDB, Express.js, React.js, No
 ## 🚀 Live Demo Credentials
 Want to test the platform quickly without registering? Use these pre-configured demo accounts to explore different roles:
 
-**Consumer Account (For buying products):**
-* **Email:** `user@demo.com` *(or easily register your own)*
-* **Password:** `password123`
+### 🛒 Consumer Accounts (Buyers)
+*   *Sai Charan*: sai@gmail.com
+*   *Test User*: testuser@example.com
 
-**Farmer Accounts (For selling, try different ones to see specific products!):**
-* **General Demo:** `farmer@demo.com`
-* **Vegetables & Organics:** `rattaiah@farmer.com`
-* **Fruits:** `kiran@farmer.com`
-* **Dairy:** `suresh@farmer.com`
-* **Password (for all farmers):** `password123`
+### 🌾 Farmer Accounts (Sellers)
+*   *Rattaiah*: rattaiah@farmer.com
+*   *Kiran*: kiran@farmer.com
+*   *Ramesh*: ramesh@farmer.com
+*   *Suresh*: suresh@farmer.com
+*   *Srinivas*: srinivas@farmer.com
+*   *Demo Farmer*: farmer@demo.com
+*   *Rattaiah* (Original): rattaiah@gmail.com
+*   *Ravi*: ravi@gmail.com
+
+*Password:* password123
+
+You can use any of these to test the FarmPass Premium checkout (as a consumer) or the order management and dashboard features (as a farmer)!
 
 ---
 
