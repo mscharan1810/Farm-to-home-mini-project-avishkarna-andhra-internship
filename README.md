@@ -23,12 +23,12 @@ Want to test the platform quickly without registering? Use these pre-configured 
 ## 📸 Section-by-Section Walkthrough & Screenshots
 
 ### 1. Home Page (Landing Experience)
-![Home Page](screenshots/home.png)
+![Home Page](screenshots/home_v5.png)
 **Explanation:** 
 The Home Page serves as the welcoming storefront for the platform. It features a modern, hero-banner design introducing the Farm to Home concept. The page highlights the core value proposition: fresh, middleman-free produce. It also displays featured products categorized by "Best Sellers" or "Seasonal Freshness" to immediately engage users. A clear navigation bar allows users to quickly jump to the Products page or log in to their respective portals.
 
 ### 2. Products Marketplace (Consumer View)
-![Products Page](screenshots/products.png)
+![Products Page](screenshots/products_v5.png)
 **Explanation:**
 This is the primary shopping interface for consumers. It presents a responsive grid layout of all available fresh produce directly sourced from registered farmers. 
 * **Filtering & Search:** Users can filter products by categories (e.g., Fruits, Vegetables, Dairy) and search for specific items.
@@ -36,14 +36,14 @@ This is the primary shopping interface for consumers. It presents a responsive g
 * **Interaction:** Consumers can instantly add items to their cart or view more detailed information about the product's origin and farming practices.
 
 ### 3. Secure Authentication (Login/Register)
-![Login Page](screenshots/login.png)
+![Login Page](screenshots/login_v5.png)
 **Explanation:**
 The platform features a secure, dual-role authentication portal. 
 * **Role Selection:** Users must specify whether they are joining as a "Consumer" or a "Farmer". This is crucial because it determines the dashboard and permissions they receive after logging in.
 * **Security:** The system is powered by JWT token encryption, ensuring all user data, order history, and sensitive credentials are safely protected. It features form validation and instant error feedback.
 
 ### 4. Farmer Dashboard (Management Portal)
-![Farmer Dashboard](screenshots/farmer_dashboard.png)
+![Farmer Dashboard](screenshots/farmer_dashboard_v5.png)
 **Explanation:**
 A dedicated, secure management panel strictly accessible by verified farmers. 
 * **Business Overview:** Farmers can track their total earnings, total orders, and active products at a glance.
@@ -51,19 +51,19 @@ A dedicated, secure management panel strictly accessible by verified farmers.
 * **Inventory Management:** Farmers can seamlessly add new products with images, set pricing, and update stock levels to ensure their store is always up-to-date.
 
 ### 5. FarmPass & Subscriptions
-![Subscriptions](screenshots/subscriptions.png)
+![Subscriptions](screenshots/subscriptions_v5.png)
 **Explanation:**
 This dedicated section allows users to manage their premium features and recurring deliveries.
 * **FarmPass Membership:** Users can subscribe to FarmPass for ₹499/month, immediately unlocking zero delivery fees and a flat 10% discount on all future orders.
 * **Recurring Baskets:** Consumers who want daily essentials (like milk or vegetables) delivered automatically can manage their recurring product subscriptions here, viewing delivery frequencies and costs.
 
 ### 6. Dynamic Cart & Checkout
-![Cart Page](screenshots/cart.png)
+![Cart Page](screenshots/cart_v5.png)
 **Explanation:**
 A seamless shopping cart experience that automatically calculates item subtotals, applies FarmPass discounts if applicable, and computes delivery fees. The interface allows users to adjust quantities or remove items before proceeding to a smooth, multi-step checkout process to secure their fresh produce.
 
 ### 7. Real-Time Farmer-Consumer Chat
-![Live Chat](screenshots/chat.png)
+![Live Chat](screenshots/chat_v5.png)
 **Explanation:**
 A crucial feature for a direct-to-consumer platform. This real-time messaging system (powered by Socket.io) enables direct communication between consumers and farmers. Buyers can ask questions about the exact harvest date, organic certifications, or negotiate bulk pricing without leaving the application.
 
