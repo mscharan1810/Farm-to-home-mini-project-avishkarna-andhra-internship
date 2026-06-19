@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import api from "../../services/api";
+import { socket } from "../../services/socket";
 import toast from "react-hot-toast";
 
 const STATUSES = ["Pending", "Confirmed", "Shipped", "Out for Delivery", "Delivered", "Cancelled"];
@@ -17,9 +18,10 @@ export default function OrdersReceived() {
   const filteredOrders = orders.filter(o => 
     statusFilter === "delivered" ? o.status === "Delivered" : o.status !== "Delivered"
   );
-  const updateStatus = async (id, status) => {
+  const updateStatus = async (id, status, userId) => {
     await api.put(`/orders/status/${id}`, { status });
     toast.success("Status updated");
+    socket.emit("order:status_update", { userId, orderId: id, status });
     load();
   };
   return (
@@ -29,10 +31,12 @@ export default function OrdersReceived() {
         <Link to="/farmer/products">My Products</Link>
         <Link to="/farmer/orders?status=current" className={statusFilter === "current" ? "active" : ""}>Current Orders</Link>
         <Link to="/farmer/orders?status=delivered" className={statusFilter === "delivered" ? "active" : ""}>Delivered Orders</Link>
+        <Link to="/farmer/profile">Profile</Link>
       </aside>
       <div>
         <h1 className="mb-2">{statusFilter === "delivered" ? "Delivered Orders" : "Current Orders"}</h1>
-        <table>
+        <div className="table-responsive">
+          <table>
           <thead><tr><th>Order #</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
           <tbody>
             {filteredOrders.map((o) => (
@@ -42,14 +46,15 @@ export default function OrdersReceived() {
                 <td>{o.items.map((i) => i.name).join(", ")}</td>
                 <td>₹{o.totalPrice}</td>
                 <td>
-                  <select value={o.status} onChange={(e) => updateStatus(o._id, e.target.value)}>
+                  <select value={o.status} onChange={(e) => updateStatus(o._id, e.target.value, o.user)}>
                     {STATUSES.map((s) => <option key={s}>{s}</option>)}
                   </select>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

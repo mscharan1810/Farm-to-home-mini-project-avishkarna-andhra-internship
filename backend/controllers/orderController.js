@@ -5,7 +5,7 @@ const Cart = require("../models/Cart");
 
 // POST /api/orders
 exports.createOrder = asyncHandler(async (req, res) => {
-  const { items, shippingAddress, paymentMethod, itemsPrice, deliveryCharge, discount, totalPrice } = req.body;
+  const { items, shippingAddress, paymentMethod, itemsPrice, deliveryCharge, discount, totalPrice, isSubscription, frequency } = req.body;
   if (!items?.length) { res.status(400); throw new Error("No order items"); }
 
   // hydrate items with farmer ids
@@ -27,6 +27,8 @@ exports.createOrder = asyncHandler(async (req, res) => {
     user: req.user._id, items: hydrated, shippingAddress,
     paymentMethod: paymentMethod || "COD",
     itemsPrice, deliveryCharge, discount, totalPrice,
+    isSubscription: isSubscription || false,
+    frequency: frequency || "Weekly",
   });
 
   await Cart.findOneAndUpdate({ user: req.user._id }, { items: [] });
@@ -67,4 +69,16 @@ exports.updateStatus = asyncHandler(async (req, res) => {
 exports.allOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find().populate("user", "name email").sort({ createdAt: -1 });
   res.json(orders);
+});
+
+// PUT /api/orders/cancel/:id
+exports.cancelOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (!order) { res.status(404); throw new Error("Order not found"); }
+  if (order.user.toString() !== req.user._id.toString()) {
+    res.status(403); throw new Error("Not authorized");
+  }
+  order.status = "Cancelled";
+  await order.save();
+  res.json(order);
 });

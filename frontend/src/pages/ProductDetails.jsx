@@ -1,132 +1,155 @@
-import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import api from "../services/api";
 import Loader from "../components/Loader";
 import { useCart } from "../context/CartContext";
+import { FiCheck, FiTruck, FiShield, FiStar, FiMessageSquare } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
-import { FiStar, FiMessageCircle } from "react-icons/fi";
 
 export default function ProductDetails() {
   const { id } = useParams();
-  const { addToCart } = useCart();
-  const { user } = useAuth();
-  const nav = useNavigate();
   const [product, setProduct] = useState(null);
-  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(1);
-  const [activeImg, setActiveImg] = useState(0);
-  const [reviewForm, setReviewForm] = useState({ rating: 5, comment: "" });
+  const { addToCart } = useCart();
 
-  const load = async () => {
-    const [p, r] = await Promise.all([api.get(`/products/${id}`), api.get(`/reviews/${id}`)]);
-    setProduct(p.data); setReviews(r.data);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    api.get(`/products/${id}`).then(r => setProduct(r.data)).finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) return <Loader />;
+  if (!product) return <div className="container text-center mt-4"><h2>Product not found</h2></div>;
+
+  const handleAdd = () => {
+    addToCart(product._id, qty);
   };
-  useEffect(() => { load(); }, [id]);
 
-  const submitReview = async (e) => {
-    e.preventDefault();
+  const handleChat = async () => {
+    if (!user) {
+      toast.error("Please login to chat with the farmer");
+      navigate("/login", { state: { from: location.pathname } });
+      return;
+    }
+    if (user._id === product.farmer?._id) {
+      toast.error("You cannot chat with yourself!");
+      return;
+    }
     try {
-      await api.post("/reviews", { productId: id, ...reviewForm });
-      toast.success("Review added!");
-      setReviewForm({ rating: 5, comment: "" });
-      load();
-    } catch (err) { toast.error(err.response?.data?.message || "Error"); }
+      const { data } = await api.post("/chat", { userId: product.farmer._id });
+      navigate("/chat", { state: { activeChat: data } });
+    } catch (err) {
+      toast.error("Failed to start chat");
+    }
   };
-
-  const openChat = async () => {
-    if (!user) return toast.error("Login to chat");
-    try {
-      const { data: chat } = await api.post("/chat", { userId: product.farmer._id });
-      nav("/chat", { state: { activeChat: chat } });
-    } catch { toast.error("Could not open chat"); }
-  };
-
-  if (!product) return <Loader />;
-  const price = product.discountPrice > 0 ? product.discountPrice : product.price;
-  const images = product.images?.length ? product.images : [{ url: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=600" }];
 
   return (
-    <div className="container section">
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }} className="product-detail">
-        <div>
-          <div className="card" style={{ aspectRatio: "1/1" }}>
-            <img src={images[activeImg].url} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-          {images.length > 1 && (
-            <div className="flex gap-1 mt-2">
-              {images.map((img, i) => (
-                <img key={i} src={img.url} onClick={() => setActiveImg(i)}
-                  style={{ width: 70, height: 70, objectFit: "cover", borderRadius: 8, cursor: "pointer", border: activeImg === i ? "2px solid var(--primary)" : "2px solid transparent" }} />
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div>
-          <div className="flex gap-1 mb-2">
-            <span className="badge">{product.category}</span>
-            {product.organic && <span className="badge badge-organic">Organic</span>}
-            {product.seasonal && <span className="badge">Seasonal</span>}
-          </div>
-          <h1 style={{ marginBottom: ".5rem" }}>{product.name}</h1>
-          <div className="muted mb-2">
-            by <strong>{product.farmer?.farmName || product.farmer?.name}</strong>
-            {product.farmer?.verified && " ✓"}
-          </div>
-          {product.rating > 0 && (
-            <div className="rating mb-2"><FiStar /> {product.rating.toFixed(1)} ({product.numReviews} reviews)</div>
-          )}
-          <div className="flex gap-2 center mb-2">
-            <span style={{ fontSize: "2rem", fontWeight: 700, color: "var(--primary-dark)" }}>₹{price}</span>
-            <span className="muted">/ {product.unit}</span>
-            {product.discountPrice > 0 && <span className="price-old">₹{product.price}</span>}
-          </div>
-          <p className="muted mb-2">{product.description}</p>
-          {product.nutrition && <p className="mb-2"><strong>Nutrition:</strong> {product.nutrition}</p>}
-          <p className="mb-2"><strong>Stock:</strong> {product.stock > 0 ? `${product.stock} ${product.unit} available` : "Out of stock"}</p>
-
-          <div className="flex gap-2 center mb-2">
-            <div className="qty">
-              <button onClick={() => setQty(Math.max(1, qty - 1))}>-</button>
-              <span>{qty}</span>
-              <button onClick={() => setQty(qty + 1)}>+</button>
-            </div>
-            <button className="btn" disabled={product.stock < 1} onClick={() => addToCart(product._id, qty)}>Add to Cart</button>
-            <button className="btn btn-outline" onClick={openChat}><FiMessageCircle /> Chat farmer</button>
-          </div>
-        </div>
+    <div className="container" style={{ padding: "3rem 1.5rem" }}>
+      {/* Breadcrumbs */}
+      <div style={{ marginBottom: "2rem", color: "var(--muted)", fontSize: "0.95rem", fontWeight: "500" }}>
+        <Link to="/" style={{ color: "var(--muted)" }}>Home</Link> &nbsp; / &nbsp; 
+        <Link to={`/products?category=${product.category}`} style={{ color: "var(--muted)" }}>{product.category}</Link> &nbsp; / &nbsp; 
+        <span style={{ color: "var(--primary)" }}>{product.name}</span>
       </div>
 
-      <section className="mt-3">
-        <h2 style={{ marginBottom: "1rem" }}>Reviews</h2>
-        {user && (
-          <form onSubmit={submitReview} className="card" style={{ padding: "1.25rem", marginBottom: "1.5rem" }}>
-            <div className="form-group">
-              <label>Rating</label>
-              <select className="select" value={reviewForm.rating} onChange={(e) => setReviewForm({ ...reviewForm, rating: e.target.value })}>
-                {[5,4,3,2,1].map((r) => <option key={r} value={r}>{r} stars</option>)}
-              </select>
-            </div>
-            <div className="form-group">
-              <label>Comment</label>
-              <textarea className="textarea" value={reviewForm.comment} onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })} />
-            </div>
-            <button className="btn">Submit review</button>
-          </form>
-        )}
-        {reviews.length === 0 ? <p className="muted">No reviews yet.</p> : reviews.map((r) => (
-          <div key={r._id} className="card mb-2" style={{ padding: "1rem" }}>
-            <div className="flex between center">
-              <strong>{r.name}</strong>
-              <span className="rating"><FiStar /> {r.rating}</span>
-            </div>
-            <p className="muted mt-1">{r.comment}</p>
-          </div>
-        ))}
-      </section>
+      <div className="product-layout">
+        {/* Image Gallery */}
+        <div className="sticky-desktop" style={{ background: "#fff", padding: "3rem", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", boxShadow: "var(--shadow)" }}>
+          <img 
+            src={product.images?.length > 0 ? product.images[0].url : "https://placehold.co/600"} 
+            alt={product.name} 
+            style={{ width: "100%", height: "450px", objectFit: "contain" }} 
+            className="animate-fade-in" 
+            onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/600x400/f4f7f5/1b4332?text=${encodeURIComponent(product.name)}`; }}
+          />
+        </div>
 
-      <style>{`@media (max-width: 800px) { .product-detail { grid-template-columns: 1fr !important; } }`}</style>
+        {/* Product Info */}
+        <div className="animate-slide-up">
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+            {product.organic && <span className="badge badge-organic"><FiCheck /> Certified Organic</span>}
+            {product.stock < 10 && product.stock > 0 && <span className="badge badge-discount">Only {product.stock} left!</span>}
+          </div>
+
+          <h1 style={{ fontSize: "2.8rem", marginBottom: "0.5rem", fontWeight: "800", lineHeight: "1.2" }}>{product.name}</h1>
+          <p style={{ fontSize: "1.1rem", color: "var(--muted)", marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "8px" }}>
+            By <Link to={`/products?keyword=${product.farmer?.name}`} style={{ fontWeight: "700", textDecoration: "underline" }}>{product.farmer?.name}</Link>
+          </p>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "2rem" }}>
+            <div style={{ display: "flex", color: "#f59e0b", fontSize: "1.2rem" }}>
+              <FiStar fill="currentColor" /> <FiStar fill="currentColor" /> <FiStar fill="currentColor" /> <FiStar fill="currentColor" /> <FiStar fill="currentColor" />
+            </div>
+            <span style={{ fontWeight: "600", color: "var(--text)" }}>{product.rating} Rating</span>
+            <span style={{ color: "var(--muted)" }}>({product.numReviews} reviews)</span>
+          </div>
+
+          <div style={{ marginBottom: "2rem" }}>
+            <div style={{ fontSize: "2.5rem", color: "var(--primary)", fontWeight: "800", fontFamily: "var(--font-heading)", display: "flex", alignItems: "flex-end", gap: "10px" }}>
+              ₹{user?.isPremium ? (product.discountPrice || product.price) * 0.9 : (product.discountPrice || product.price)} 
+              <span style={{ fontSize: "1.1rem", color: "var(--muted)", fontWeight: "500", paddingBottom: "6px" }}>/ {product.unit}</span>
+              {product.discountPrice > 0 && !user?.isPremium && <span className="price-old" style={{ fontSize: "1.2rem", paddingBottom: "6px", marginLeft: "10px" }}>₹{product.price}</span>}
+            </div>
+            
+            {user?.isPremium ? (
+              <div style={{ display: 'inline-block', background: '#d1fae5', color: '#065f46', padding: '4px 10px', borderRadius: '4px', fontSize: '0.9rem', fontWeight: 'bold', marginTop: '0.5rem' }}>
+                🌟 FarmPass Member Price (-10%)
+              </div>
+            ) : (
+              <div style={{ display: 'inline-block', background: '#f3f4f6', color: '#4b5563', padding: '4px 10px', borderRadius: '4px', fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                🌟 Get it for <strong style={{ color: 'var(--primary)' }}>₹{((product.discountPrice || product.price) * 0.9).toFixed(2)}</strong> with <Link to="/premium" style={{ textDecoration: 'underline' }}>FarmPass</Link>
+              </div>
+            )}
+          </div>
+
+          <p style={{ fontSize: "1.1rem", color: "var(--text)", lineHeight: "1.8", marginBottom: "2.5rem" }}>{product.description}</p>
+
+          {/* Action Area */}
+          <div style={{ padding: "2rem", background: "var(--bg-soft)", borderRadius: "var(--radius-lg)", border: "1px solid var(--border)", marginBottom: "2.5rem" }}>
+            {product.stock > 0 ? (
+              <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flexWrap: "wrap" }}>
+                <div className="qty" style={{ height: "54px", padding: "0 5px", background: "#fff", boxShadow: "var(--shadow-sm)" }}>
+                  <button onClick={() => setQty(q => Math.max(1, q - 1))} style={{ padding: "0 15px" }}>-</button>
+                  <span style={{ fontSize: "1.2rem", width: "40px", display: "inline-block", textAlign: "center" }}>{qty}</span>
+                  <button onClick={() => setQty(q => Math.min(product.stock, q + 1))} style={{ padding: "0 15px" }}>+</button>
+                </div>
+                <button className="btn" onClick={handleAdd} style={{ flex: 1, minWidth: "200px", height: "54px", fontSize: "1.1rem" }}>Add to Cart</button>
+                <button className="btn" onClick={handleChat} style={{ flex: 1, minWidth: "200px", height: "54px", fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#3b82f6", color: "#ffffff", border: "none" }}>
+                  <FiMessageSquare /> Chat with Farmer
+                </button>
+              </div>
+            ) : (
+              <div style={{ display: "flex", gap: "1.5rem", alignItems: "center", flexDirection: "column" }}>
+                <h3 style={{ color: "var(--danger)", margin: 0, textAlign: "center" }}>Currently Out of Stock</h3>
+                <button className="btn" onClick={handleChat} style={{ width: "100%", height: "54px", fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#3b82f6", color: "#ffffff", border: "none" }}>
+                  <FiMessageSquare /> Chat with Farmer
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Trust Badges */}
+          <div className="grid grid-3" style={{ gap: "1rem" }}>
+            <div style={{ padding: "1rem", display: "flex", alignItems: "center", gap: "10px", background: "#fff", borderRadius: "10px", border: "1px solid var(--border)" }}>
+              <FiTruck size={24} color="var(--primary)" />
+              <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>Same Day Delivery</span>
+            </div>
+            <div style={{ padding: "1rem", display: "flex", alignItems: "center", gap: "10px", background: "#fff", borderRadius: "10px", border: "1px solid var(--border)" }}>
+              <FiShield size={24} color="var(--primary)" />
+              <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>Quality Guaranteed</span>
+            </div>
+            <div style={{ padding: "1rem", display: "flex", alignItems: "center", gap: "10px", background: "#fff", borderRadius: "10px", border: "1px solid var(--border)" }}>
+              <FiStar size={24} color="var(--primary)" />
+              <span style={{ fontWeight: "600", fontSize: "0.9rem" }}>Direct from Farm</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }

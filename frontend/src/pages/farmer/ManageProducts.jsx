@@ -21,18 +21,20 @@ export default function ManageProducts() {
         <Link to="/farmer/products/new">Add Product</Link>
         <Link to="/farmer/orders?status=current">Current Orders</Link>
         <Link to="/farmer/orders?status=delivered">Delivered Orders</Link>
+        <Link to="/farmer/profile">Profile</Link>
       </aside>
       <div>
         <div className="flex between center mb-2">
           <h1>My Products</h1>
           <Link to="/farmer/products/new" className="btn">+ Add product</Link>
         </div>
-        <table>
+        <div className="table-responsive">
+          <table>
           <thead><tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Sold</th><th></th></tr></thead>
           <tbody>
             {items.map((p) => (
               <tr key={p._id}>
-                <td><img src={p.images[0]?.url || "https://via.placeholder.com/40"} style={{ width: 40, height: 40, borderRadius: 6, objectFit: "cover" }} /></td>
+                <td><img src={p.images?.[0]?.url || "https://placehold.co/40x40/f4f7f5/1b4332?text=Img"} style={{ width: 40, height: 40, borderRadius: 6, objectFit: "cover" }} /></td>
                 <td>{p.name}</td>
                 <td>{p.category}</td>
                 <td>₹{p.price}</td>
@@ -45,7 +47,8 @@ export default function ManageProducts() {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ exports.register = asyncHandler(async (req, res) => {
   res.status(201).json({
     _id: user._id, name: user.name, email: user.email, role: user.role,
     phone: user.phone, address: user.address, farmName: user.farmName,
+    isPremium: user.isPremium,
     profileImage: user.profileImage, token: generateToken(user._id, user.role),
   });
 });
@@ -37,6 +38,7 @@ exports.login = asyncHandler(async (req, res) => {
   res.json({
     _id: user._id, name: user.name, email: user.email, role: user.role,
     phone: user.phone, address: user.address, farmName: user.farmName,
+    isPremium: user.isPremium,
     profileImage: user.profileImage, token: generateToken(user._id, user.role),
   });
 });
@@ -55,6 +57,24 @@ exports.updateProfile = asyncHandler(async (req, res) => {
   user.address = req.body.address || user.address;
   user.profileImage = req.body.profileImage || user.profileImage;
   user.farmName = req.body.farmName || user.farmName;
+  await user.save();
+  res.json(user);
+});
+
+// PUT /api/auth/premium
+exports.upgradePremium = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) { res.status(404); throw new Error("User not found"); }
+  user.isPremium = true;
+  await user.save();
+  res.json(user);
+});
+
+// PUT /api/auth/premium/cancel
+exports.cancelPremium = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) { res.status(404); throw new Error("User not found"); }
+  user.isPremium = false;
   await user.save();
   res.json(user);
 });

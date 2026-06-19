@@ -29,6 +29,7 @@ export default function EditProduct() {
         <Link to="/farmer/products/new">Add Product</Link>
         <Link to="/farmer/orders?status=current">Current Orders</Link>
         <Link to="/farmer/orders?status=delivered">Delivered Orders</Link>
+        <Link to="/farmer/profile">Profile</Link>
       </aside>
       <div>
         <h1 className="mb-2">Edit Product</h1>

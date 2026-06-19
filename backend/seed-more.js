@@ -3,89 +3,116 @@ const mongoose = require('mongoose');
 const User = require('./models/User');
 const Product = require('./models/Product');
 
-const categories = {
-  "Vegetables": [
-    { name: "Aloo (Potatoes)", imgKey: "Potatoes" },
-    { name: "Pyaaz (Onions)", imgKey: "Onions" },
-    { name: "Gajar (Carrots)", imgKey: "Carrots" },
-    { name: "Patta Gobi (Cabbage)", imgKey: "Cabbage" },
-    { name: "Baingan (Eggplant)", imgKey: "Aubergine" },
-    { name: "Kheera (Cucumber)", imgKey: "Cucumber" },
-    { name: "Shatavari (Asparagus)", imgKey: "Asparagus" },
-    { name: "Hari Phool Gobi (Broccoli)", imgKey: "Broccoli" },
-    { name: "Ajmoda (Celery)", imgKey: "Celery" },
-    { name: "Lahsun (Garlic)", imgKey: "Garlic" }
-  ],
-  "Fruits": [
-    { name: "Seb (Apples)", imgKey: "Apples" },
-    { name: "Santra (Orange)", imgKey: "Orange" },
-    { name: "Kela (Banana)", imgKey: "Banana" },
-    { name: "Strawberry", imgKey: "Strawberries" },
-    { name: "Raspberry", imgKey: "Raspberries" },
-    { name: "Blueberry", imgKey: "Blueberries" },
-    { name: "Aadoo (Peaches)", imgKey: "Peaches" },
-    { name: "Nashpati (Pears)", imgKey: "Pears" },
-    { name: "Cherry", imgKey: "Cherry" },
-    { name: "Khumani (Apricot)", imgKey: "Apricot" }
-  ],
-  "Leafy Vegetables": [
-    { name: "Palak (Spinach)", imgKey: "Spinach" },
-    { name: "Kale (Karam Saag)", imgKey: "Kale" },
-    { name: "Salad Patta (Lettuce)", imgKey: "Lettuce" },
-    { name: "Rocket Leaves", imgKey: "Rocket" },
-    { name: "Tulsi (Basil)", imgKey: "Basil" },
-    { name: "Dhania Patta (Coriander)", imgKey: "Coriander" },
-    { name: "Pudina (Mint)", imgKey: "Mint" },
-    { name: "Parsley", imgKey: "Parsley" },
-    { name: "Thyme", imgKey: "Thyme" },
-    { name: "Rosemary", imgKey: "Rosemary" }
-  ],
-  "Dairy": [
-    { name: "Doodh (Milk)", imgKey: "Milk" },
-    { name: "Makhan (Butter)", imgKey: "Butter" },
-    { name: "Cheese", imgKey: "Cheese" },
-    { name: "Malai (Cream)", imgKey: "Cream" },
-    { name: "Dahi (Yogurt)", imgKey: "Yogurt" },
-    { name: "Cheddar Cheese", imgKey: "Cheddar Cheese" },
-    { name: "Parmesan Cheese", imgKey: "Parmesan" },
-    { name: "Feta Cheese", imgKey: "Feta" },
-    { name: "Mascarpone", imgKey: "Mascarpone" },
-    { name: "Ricotta Cheese", imgKey: "Ricotta" }
-  ],
-  "Grains": [
-    { name: "Chawal (Rice)", imgKey: "Rice" },
-    { name: "Bhura Chawal (Brown Rice)", imgKey: "Brown Rice" },
-    { name: "Basmati Chawal", imgKey: "Basmati Rice" },
-    { name: "Jaei (Oats)", imgKey: "Oats" },
-    { name: "Rolled Oats", imgKey: "Rolled Oats" },
-    { name: "Atta (Flour)", imgKey: "Flour" },
-    { name: "Macaroni", imgKey: "Macaroni" },
-    { name: "Spaghetti", imgKey: "Spaghetti" },
-    { name: "Couscous", imgKey: "Couscous" },
-    { name: "Bread", imgKey: "Bread" }
-  ],
-  "Organic Products": [
-    { name: "Shahad (Honey)", imgKey: "Honey" },
-    { name: "Haldi (Turmeric)", imgKey: "Turmeric" },
-    { name: "Badam (Almonds)", imgKey: "Almonds" },
-    { name: "Akhrot (Walnuts)", imgKey: "Walnuts" },
-    { name: "Kali Mirch (Black Pepper)", imgKey: "Black Pepper" },
-    { name: "Elaichi (Cardamom)", imgKey: "Cardamom" },
-    { name: "Peanut Butter", imgKey: "Peanut Butter" },
-    { name: "Dalchini (Cinnamon)", imgKey: "Cinnamon" },
-    { name: "Adrak (Ginger)", imgKey: "Ginger" },
-    { name: "Jaiphal (Nutmeg)", imgKey: "Nutmeg" }
-  ]
-};
-
-const units = {
-  "Vegetables": "kg",
-  "Fruits": "kg",
-  "Leafy Vegetables": "bunch",
-  "Dairy": "kg",
-  "Grains": "kg",
-  "Organic Products": "pack"
-};
+const indianProducts = [
+  {
+    name: "Fresh Aloo (Potatoes)",
+    category: "Vegetables",
+    description: "Premium quality, earthy and fresh potatoes straight from the farms of Punjab. Perfect for your everyday curries and parathas.",
+    price: 35,
+    unit: "kg",
+    image: "/images/aloo.png",
+    organic: true
+  },
+  {
+    name: "Lal Pyaaz (Red Onions)",
+    category: "Vegetables",
+    description: "Crisp and pungent red onions, harvested at the peak of their freshness. A staple for Indian cooking.",
+    price: 45,
+    unit: "kg",
+    image: "/images/red_onion.png",
+    organic: false
+  },
+  {
+    name: "Desi Tamatar (Tomatoes)",
+    category: "Vegetables",
+    description: "Juicy, tangy country tomatoes grown without harmful pesticides. Perfect for gravies and chutneys.",
+    price: 50,
+    unit: "kg",
+    image: "/images/tomato.png",
+    organic: true
+  },
+  {
+    name: "Alphonso Aam (Mangoes)",
+    category: "Fruits",
+    description: "The king of fruits. Hand-picked, naturally ripened Alphonso mangoes from Ratnagiri.",
+    price: 350,
+    unit: "dozen",
+    image: "/images/mango.png",
+    organic: true
+  },
+  {
+    name: "Anaar (Pomegranate)",
+    category: "Fruits",
+    description: "Ruby-red, sweet, and juicy pomegranates. Rich in antioxidants and fresh from Maharashtra.",
+    price: 180,
+    unit: "kg",
+    image: "/images/pomegranate.png",
+    organic: true
+  },
+  {
+    name: "Palak (Spinach)",
+    category: "Leafy Vegetables",
+    description: "Crisp, iron-rich spinach leaves. Harvested in the morning and delivered to you on the same day.",
+    price: 30,
+    unit: "bunch",
+    image: "/images/spinach.png",
+    organic: true
+  },
+  {
+    name: "Desi Ghee",
+    category: "Dairy",
+    description: "Pure, aromatic, and rich A2 cow ghee. Made using the traditional Bilona method.",
+    price: 750,
+    unit: "liter",
+    image: "/images/ghee.png",
+    organic: true
+  },
+  {
+    name: "Basmati Chawal (Rice)",
+    category: "Grains",
+    description: "Long-grain, aromatic Basmati rice aged to perfection. Essential for authentic biryanis.",
+    price: 120,
+    unit: "kg",
+    image: "/images/rice.png",
+    organic: true
+  },
+  {
+    name: "Toor Dal (Pigeon Pea)",
+    category: "Grains",
+    description: "Unpolished and rich in protein. A daily essential for the perfect comforting dal.",
+    price: 140,
+    unit: "kg",
+    image: "/images/toor_dal.png",
+    organic: true
+  },
+  {
+    name: "Organic Haldi (Turmeric)",
+    category: "Organic Products",
+    description: "High curcumin content turmeric powder. Farm-fresh, unadulterated, and brightly colored.",
+    price: 250,
+    unit: "kg",
+    image: "/images/turmeric.png",
+    organic: true
+  },
+  {
+    name: "Kali Mirch (Black Pepper)",
+    category: "Organic Products",
+    description: "Strong, pungent whole black pepper sourced directly from the spice gardens of Kerala.",
+    price: 400,
+    unit: "pack",
+    image: "/images/black_pepper.png",
+    organic: true
+  },
+  {
+    name: "Desi Gud (Jaggery)",
+    category: "Organic Products",
+    description: "Chemical-free, dark, and natural sugarcane jaggery. A perfect healthy substitute for sugar.",
+    price: 90,
+    unit: "kg",
+    image: "/images/jaggery.png",
+    organic: true
+  }
+];
 
 async function seedMore() {
   try {
@@ -110,31 +137,26 @@ async function seedMore() {
       await farmer.save();
     }
 
-    const allProducts = [];
-
-    for (const [category, items] of Object.entries(categories)) {
-      items.forEach((item, idx) => {
-        const price = Math.floor(Math.random() * 200) + 20; 
-        allProducts.push({
-          name: item.name,
-          category: category,
-          description: `Fresh, locally sourced ${item.name}.`,
-          price: price,
-          discountPrice: price - (price * 0.1), 
-          stock: Math.floor(Math.random() * 100) + 10,
-          unit: units[category] || 'kg',
-          images: [{ url: `https://www.themealdb.com/images/ingredients/${encodeURIComponent(item.imgKey)}.png`, publicId: `demo_${category}_${idx}` }],
-          organic: category === "Organic Products" || Math.random() > 0.7,
-          seasonal: Math.random() > 0.5,
-          farmer: farmer._id,
-          rating: (Math.random() * 2 + 3).toFixed(1),
-          numReviews: Math.floor(Math.random() * 50) + 1,
-        });
-      });
-    }
+    const allProducts = indianProducts.map((p, i) => {
+      return {
+        name: p.name,
+        category: p.category,
+        description: p.description,
+        price: p.price,
+        discountPrice: p.price - Math.floor(p.price * 0.1),
+        stock: Math.floor(Math.random() * 50) + 20,
+        unit: p.unit,
+        images: [{ url: p.image, publicId: `prod_${i}` }],
+        organic: p.organic,
+        seasonal: Math.random() > 0.5,
+        farmer: farmer._id,
+        rating: (Math.random() * 1 + 4).toFixed(1), // 4.0 to 5.0
+        numReviews: Math.floor(Math.random() * 150) + 20,
+      };
+    });
 
     await Product.insertMany(allProducts);
-    console.log(`Inserted ${allProducts.length} Demo Products with Indian names!`);
+    console.log(`Inserted ${allProducts.length} High-Quality Indian Products!`);
 
     process.exit(0);
   } catch (err) {

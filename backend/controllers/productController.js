@@ -38,7 +38,7 @@ exports.getProduct = asyncHandler(async (req, res) => {
 
 // POST /api/products  (farmer)
 exports.createProduct = asyncHandler(async (req, res) => {
-  const images = (req.files || []).map((f) => ({ url: f.path, publicId: f.filename }));
+  const images = (req.files || []).map((f) => ({ url: `${req.protocol}://${req.get("host")}/uploads/${f.filename}`, publicId: f.filename }));
   const product = await Product.create({
     ...req.body,
     price: Number(req.body.price),
@@ -61,7 +61,7 @@ exports.updateProduct = asyncHandler(async (req, res) => {
   }
   Object.assign(product, req.body);
   if (req.files?.length) {
-    const newImgs = req.files.map((f) => ({ url: f.path, publicId: f.filename }));
+    const newImgs = req.files.map((f) => ({ url: `${req.protocol}://${req.get("host")}/uploads/${f.filename}`, publicId: f.filename }));
     product.images.push(...newImgs);
   }
   await product.save();

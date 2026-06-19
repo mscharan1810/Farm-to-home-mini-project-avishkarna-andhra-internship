@@ -44,6 +44,8 @@ const orderSchema = new mongoose.Schema(
       default: "Pending",
     },
     deliveredAt: Date,
+    isSubscription: { type: Boolean, default: false },
+    frequency: { type: String, enum: ["Daily", "Every 3 Days", "Weekly", "Bi-Weekly", "Monthly"], default: "Weekly" },
   },
   { timestamps: true }
 );

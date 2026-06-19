@@ -6,32 +6,42 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div>
-            <h4>🌾 Farm to Home</h4>
-            <p style={{ color: "#a89f8c", fontSize: ".9rem" }}>
-              Fresh produce delivered straight from Indian farmers to your kitchen — no middlemen, fair prices.
+            <h4>Farm to Home</h4>
+            <p>
+              Fresh produce delivered straight from Indian farms to your kitchen — no middlemen, fair prices.
             </p>
           </div>
           <div>
-            <h4>Shop</h4>
-            <Link to="/products">All Products</Link>
-            <Link to="/products?category=Vegetables">Vegetables</Link>
-            <Link to="/products?category=Fruits">Fruits</Link>
-            <Link to="/products?organic=true">Organic</Link>
+            <h4>Shop By Category</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <Link to="/products">All Products</Link>
+              <Link to="/products?category=Vegetables">Vegetables</Link>
+              <Link to="/products?category=Fruits">Fruits</Link>
+              <Link to="/products?organic=true">Organic</Link>
+            </div>
           </div>
           <div>
-            <h4>Company</h4>
-            <Link to="/about">About Us</Link>
-            <Link to="/contact">Contact</Link>
-            <Link to="/register">Become a Farmer</Link>
+            <h4>Company Information</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <Link to="/about">About Us</Link>
+              <Link to="/contact">Contact</Link>
+              <Link to="/register">Become a Farmer</Link>
+            </div>
           </div>
           <div>
-            <h4>Contact</h4>
-            <p style={{ color: "#a89f8c", fontSize: ".9rem" }}>
-              hello@farmtohome.in<br />+91 98765 43210
+            <h4>Get In Touch</h4>
+            <p>
+              hello@farmhome.in<br />+91 98765 43210
             </p>
           </div>
         </div>
-        <div className="footer-bottom">© {new Date().getFullYear()} Farm to Home. Made with 💚 in India.</div>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} Farm to Home. Made with 💚 in India.</span>
+          <div style={{ display: 'flex', gap: '1.5rem' }}>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

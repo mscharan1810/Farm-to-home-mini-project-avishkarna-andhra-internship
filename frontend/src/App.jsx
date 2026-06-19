@@ -14,14 +14,14 @@ import MyOrders from "./pages/MyOrders";
 import OrderDetails from "./pages/OrderDetails";
 import Wishlist from "./pages/Wishlist";
 import Profile from "./pages/Profile";
+import Subscriptions from "./pages/Subscriptions";
 import FarmerDashboard from "./pages/farmer/FarmerDashboard";
 import AddProduct from "./pages/farmer/AddProduct";
 import EditProduct from "./pages/farmer/EditProduct";
 import ManageProducts from "./pages/farmer/ManageProducts";
 import OrdersReceived from "./pages/farmer/OrdersReceived";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import UserManagement from "./pages/admin/UserManagement";
-import OrderMonitoring from "./pages/admin/OrderMonitoring";
+import FarmerProfile from "./pages/farmer/FarmerProfile";
+
 import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -30,7 +30,7 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <main style={{ minHeight: "70vh" }}>
+      <main style={{ minHeight: "70vh", paddingTop: "2rem" }}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -45,6 +45,7 @@ export default function App() {
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
           <Route path="/orders/:id" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+          <Route path="/subscriptions" element={<ProtectedRoute><Subscriptions /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
 
@@ -53,10 +54,8 @@ export default function App() {
           <Route path="/farmer/products/new" element={<ProtectedRoute roles={["farmer","admin"]}><AddProduct /></ProtectedRoute>} />
           <Route path="/farmer/products/:id/edit" element={<ProtectedRoute roles={["farmer","admin"]}><EditProduct /></ProtectedRoute>} />
           <Route path="/farmer/orders" element={<ProtectedRoute roles={["farmer","admin"]}><OrdersReceived /></ProtectedRoute>} />
+          <Route path="/farmer/profile" element={<ProtectedRoute roles={["farmer","admin"]}><FarmerProfile /></ProtectedRoute>} />
 
-          <Route path="/admin" element={<ProtectedRoute roles={["admin"]}><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/users" element={<ProtectedRoute roles={["admin"]}><UserManagement /></ProtectedRoute>} />
-          <Route path="/admin/orders" element={<ProtectedRoute roles={["admin"]}><OrderMonitoring /></ProtectedRoute>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

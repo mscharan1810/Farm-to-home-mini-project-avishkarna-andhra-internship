@@ -86,7 +86,7 @@ async function seed() {
         price: 85,
         stock: 200,
         unit: 'kg',
-        images: [{ url: 'https://images.unsplash.com/photo-1586201375761-83865001e8ac?w=500&q=80', publicId: 'rice_demo' }],
+        images: [{ url: 'https://images.unsplash.com/photo-1673158190671-cd4e3baffbec?w=500&q=80', publicId: 'rice_demo' }],
         organic: true,
         farmer: farmer._id,
       }

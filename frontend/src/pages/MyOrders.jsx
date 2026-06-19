@@ -3,34 +3,78 @@ import { Link } from "react-router-dom";
 import api from "../services/api";
 import Loader from "../components/Loader";
 
-const STATUS_COLORS = {
-  Pending: "#d4842a", Confirmed: "#3a5333", Shipped: "#1e6b8a",
-  "Out for Delivery": "#7d9b76", Delivered: "#2d5a2d", Cancelled: "#b54a3a",
-};
-
 export default function MyOrders() {
-  const [orders, setOrders] = useState(null);
-  useEffect(() => { api.get("/orders/myorders").then((r) => setOrders(r.data)); }, []);
-  if (!orders) return <Loader />;
-  if (!orders.length) return <div className="container section text-center"><h2>No orders yet</h2><Link to="/products" className="btn mt-2">Start shopping</Link></div>;
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get("/orders/myorders").then(r => setOrders(r.data)).finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <Loader />;
+
   return (
-    <div className="container section">
-      <h1 className="mb-2">My Orders</h1>
-      <table>
-        <thead><tr><th>Order #</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr></thead>
-        <tbody>
-          {orders.map((o) => (
-            <tr key={o._id}>
-              <td>#{o._id.slice(-6)}</td>
-              <td>{new Date(o.createdAt).toLocaleDateString()}</td>
-              <td>{o.items.length}</td>
-              <td>₹{o.totalPrice}</td>
-              <td><span className="badge" style={{ background: STATUS_COLORS[o.status], color: "#fff" }}>{o.status}</span></td>
-              <td><Link to={`/orders/${o._id}`} className="btn btn-sm btn-outline">View</Link></td>
-            </tr>
+    <div className="container animate-slide-up" style={{ padding: '4rem 1.5rem', minHeight: '70vh' }}>
+      <h1 className="section-title" style={{ textAlign: 'left', marginBottom: '2rem' }}>
+        <small>Track your</small>My Orders
+      </h1>
+
+      {orders.length === 0 ? (
+        <div className="card text-center" style={{ padding: '4rem 2rem', borderStyle: 'dashed', borderColor: 'var(--border)' }}>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📦</div>
+          <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>No orders yet</h3>
+          <p className="muted" style={{ marginBottom: '2rem' }}>You haven't placed any orders. Start exploring fresh produce today!</p>
+          <Link to="/products" className="btn" style={{ padding: '0.8rem 2rem' }}>Shop Now</Link>
+        </div>
+      ) : (
+        <div className="grid" style={{ gap: '1.5rem' }}>
+          {orders.map(o => (
+            <Link key={o._id} to={`/orders/${o._id}`} className="card" style={{ display: 'block', textDecoration: 'none', padding: '1.5rem 2rem', transition: '0.3s' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+                
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                  <div style={{ background: 'var(--accent)', padding: '1rem', borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+                    🛍️
+                  </div>
+                  <div>
+                    <strong style={{ display: 'block', fontSize: '1.2rem', color: 'var(--text)', marginBottom: '0.2rem', fontFamily: 'var(--font-heading)' }}>
+                      Order #{o._id.substring(o._id.length - 6).toUpperCase()}
+                    </strong>
+                    <span className="muted" style={{ fontSize: '0.9rem', display: 'block', marginBottom: '0.4rem' }}>
+                      {new Date(o.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </span>
+                    <div style={{ fontSize: '0.95rem', color: 'var(--text)' }}>
+                      {o.items?.map(i => `${i.quantity}x ${i.name}`).join(', ').substring(0, 50)}
+                      {o.items?.map(i => `${i.quantity}x ${i.name}`).join(', ').length > 50 && '...'}
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
+                  <div>
+                    <span className="muted" style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Total Amount</span>
+                    <strong style={{ fontSize: '1.3rem', color: 'var(--primary)', fontFamily: 'var(--font-heading)' }}>₹{o.totalPrice.toFixed(2)}</strong>
+                  </div>
+
+                  <div>
+                    <span className="muted" style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Status</span>
+                    {o.status === "Delivered" ? (
+                      <span className="badge badge-organic">Delivered</span>
+                    ) : (
+                      <span className="badge badge-discount">{o.status}</span>
+                    )}
+                  </div>
+                  
+                  <div style={{ color: 'var(--primary)', fontSize: '1.5rem', fontWeight: 'bold' }}>
+                    →
+                  </div>
+                </div>
+
+              </div>
+            </Link>
           ))}
-        </tbody>
-      </table>
+        </div>
+      )}
     </div>
   );
 }

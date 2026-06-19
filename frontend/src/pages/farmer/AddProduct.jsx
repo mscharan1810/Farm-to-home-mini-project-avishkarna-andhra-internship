@@ -43,6 +43,7 @@ export default function AddProduct() {
         <Link to="/farmer/products/new" className="active">Add Product</Link>
         <Link to="/farmer/orders?status=current">Current Orders</Link>
         <Link to="/farmer/orders?status=delivered">Delivered Orders</Link>
+        <Link to="/farmer/profile">Profile</Link>
       </aside>
       <div>
         <h1 className="mb-2">Add Product</h1>

@@ -19,14 +19,14 @@ export default function FarmerDashboard() {
         <Link to="/farmer/products/new">Add Product</Link>
         <Link to="/farmer/orders?status=current">Current Orders</Link>
         <Link to="/farmer/orders?status=delivered">Delivered Orders</Link>
-        <Link to="/chat">Messages</Link>
+        <Link to="/farmer/profile">Profile</Link>
       </aside>
       <div>
         <h1 className="mb-2">Farmer Dashboard 🚜</h1>
         <div className="stat-grid">
           <div className="stat"><div className="label">Products listed</div><div className="value">{stats.products}</div></div>
           <div className="stat"><div className="label">Orders received</div><div className="value">{stats.orders}</div></div>
-          <div className="stat"><div className="label">Total earnings</div><div className="value">₹{stats.revenue}</div></div>
+          <div className="stat"><div className="label">Total earnings</div><div className="value">₹{Number(stats.revenue).toFixed(2)}</div></div>
         </div>
       </div>
     </div>

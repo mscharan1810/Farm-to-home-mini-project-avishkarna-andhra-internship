@@ -24,6 +24,32 @@ export function AuthProvider({ children }) {
     setUser(updated);
   };
 
+  const upgradePremium = async () => {
+    setLoading(true);
+    try {
+      const { data } = await api.put("/auth/premium");
+      updateUser({ isPremium: true });
+      toast.success("Welcome to FarmPass Premium! 🌟");
+      return data;
+    } catch (e) {
+      toast.error(e.response?.data?.message || "Failed to upgrade");
+      throw e;
+    } finally { setLoading(false); }
+  };
+
+  const cancelPremium = async () => {
+    setLoading(true);
+    try {
+      const { data } = await api.put("/auth/premium/cancel");
+      updateUser({ isPremium: false });
+      toast.success("FarmPass Membership Cancelled.");
+      return data;
+    } catch (e) {
+      toast.error(e.response?.data?.message || "Failed to cancel membership");
+      throw e;
+    } finally { setLoading(false); }
+  };
+
   const login = async (email, password) => {
     setLoading(true);
     try {
@@ -58,7 +84,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, updateUser, upgradePremium, cancelPremium }}>
       {children}
     </AuthContext.Provider>
   );

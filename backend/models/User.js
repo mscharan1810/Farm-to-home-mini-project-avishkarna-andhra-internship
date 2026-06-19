@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema(
     profileImage: { type: String, default: "" },
     farmName: { type: String, default: "" },
     verified: { type: Boolean, default: false },
+    isPremium: { type: Boolean, default: false },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }

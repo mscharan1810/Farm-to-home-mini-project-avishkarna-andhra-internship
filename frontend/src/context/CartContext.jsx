@@ -24,7 +24,7 @@ export function CartProvider({ children }) {
     if (!user) return toast.error("Please login first");
     const { data } = await api.post("/cart/add", { productId, quantity });
     setCart(data);
-    toast.success("Added to cart");
+    toast.success("Added to cart", { id: "cart-toast" });
   };
 
   const updateQty = async (productId, quantity) => {

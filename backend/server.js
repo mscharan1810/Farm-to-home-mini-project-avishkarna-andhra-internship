@@ -11,12 +11,16 @@ const { Server } = require("socket.io");
 
 const connectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middleware/error");
+const { startMarketUpdater } = require("./utils/marketUpdater");
 
 connectDB();
 const app = express();
+startMarketUpdater();
 
+const path = require("path");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_URL || "*", credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
@@ -31,15 +35,15 @@ app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/cart", require("./routes/cartRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
-app.use("/api/admin", require("./routes/adminRoutes"));
-app.use("/api/payment", require("./routes/paymentRoutes"));
+
+
 app.use("/api/chat", require("./routes/chatRoutes"));
 
 app.use(notFound);
 app.use(errorHandler);
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: process.env.CLIENT_URL || "*" } });
+const io = new Server(server, { cors: { origin: true, credentials: true } });
 
 const onlineUsers = new Map();
 
@@ -55,6 +59,12 @@ io.on("connection", (socket) => {
     io.to(chatId).emit("chat:message", message);
     if (receiverId && onlineUsers.has(receiverId)) {
       io.to(onlineUsers.get(receiverId)).emit("chat:notification", { chatId, message });
+    }
+  });
+
+  socket.on("order:status_update", ({ userId, orderId, status }) => {
+    if (userId && onlineUsers.has(userId)) {
+      io.to(onlineUsers.get(userId)).emit("order:notification", { orderId, status });
     }
   });
 

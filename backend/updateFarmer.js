@@ -1,20 +1,28 @@
-require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/User');
-const connectDB = require('./config/db');
+const Product = require('./models/Product');
+const Order = require('./models/Order');
 
-async function run() {
-  await connectDB();
-  const rattaiah = await User.findOne({ email: 'rattaiah@gmail.com' });
+mongoose.connect('mongodb://localhost:27017/farm-to-home').then(async () => {
+  const user = await User.findOne({ email: 'rattaiah@gmail.com' });
+  if (!user) { console.log('User not found'); process.exit(0); }
   
-  if (rattaiah) {
-    // Just assign plain text; pre-save hook handles hashing
-    rattaiah.password = '123456789';
-    await rattaiah.save();
-    console.log("Updated rattaiah's password correctly!");
-  } else {
-    console.log("Rattaiah not found!");
+  // Reassign all products
+  await Product.updateMany({}, { $set: { farmer: user._id } });
+  
+  // Reassign all order items
+  const orders = await Order.find();
+  for (const o of orders) {
+    let changed = false;
+    for (const item of o.items) {
+      if (item.farmer.toString() !== user._id.toString()) {
+        item.farmer = user._id;
+        changed = true;
+      }
+    }
+    if (changed) await o.save();
   }
-  process.exit();
-}
-run();
+  
+  console.log('Reassigned all products and existing orders to rattaiah');
+  process.exit(0);
+});
