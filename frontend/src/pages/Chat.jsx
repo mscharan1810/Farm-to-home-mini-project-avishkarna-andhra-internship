@@ -31,7 +31,7 @@ export default function Chat() {
           api.get("/chat").then(r => setChats(r.data));
           return prev;
         }
-        return prev.map(c => c._id === chatId ? { ...c, lastMessage: message.text } : c);
+        return prev.map(c => c._id === chatId ? { ...c, lastMessage: message.text, hasUnread: true } : c);
       });
     };
     socket.on("chat:notification", handleNotif);
@@ -70,8 +70,11 @@ export default function Chat() {
         <div className="chat-list">
           {chats.length === 0 && <div style={{ padding: "1rem" }} className="muted">No conversations yet.</div>}
           {chats.map((c) => (
-            <div key={c._id} className={`item ${active?._id === c._id ? "active" : ""}`} onClick={() => setActive(c)}>
-              <strong>{partner(c)?.name}</strong>
+            <div key={c._id} className={`item ${active?._id === c._id ? "active" : ""}`} onClick={() => { setActive(c); setChats(prev => prev.map(p => p._id === c._id ? { ...p, hasUnread: false } : p)); }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <strong>{partner(c)?.name}</strong>
+                {c.hasUnread && active?._id !== c._id && <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "var(--danger)" }}></span>}
+              </div>
               <div className="muted" style={{ fontSize: ".8rem" }}>{c.lastMessage || "No messages yet"}</div>
             </div>
           ))}
