@@ -50,6 +50,23 @@ A dedicated, secure management panel strictly accessible by verified farmers.
 * **Order Fulfillment:** Displays incoming orders from consumers. Farmers can update the status of these orders (Pending -> Processing -> Delivered).
 * **Inventory Management:** Farmers can seamlessly add new products with images, set pricing, and update stock levels to ensure their store is always up-to-date.
 
+### 5. FarmPass & Subscriptions
+![Subscriptions](screenshots/subscriptions.png)
+**Explanation:**
+This dedicated section allows users to manage their premium features and recurring deliveries.
+* **FarmPass Membership:** Users can subscribe to FarmPass for ₹499/month, immediately unlocking zero delivery fees and a flat 10% discount on all future orders.
+* **Recurring Baskets:** Consumers who want daily essentials (like milk or vegetables) delivered automatically can manage their recurring product subscriptions here, viewing delivery frequencies and costs.
+
+### 6. Dynamic Cart & Checkout
+![Cart Page](screenshots/cart.png)
+**Explanation:**
+A seamless shopping cart experience that automatically calculates item subtotals, applies FarmPass discounts if applicable, and computes delivery fees. The interface allows users to adjust quantities or remove items before proceeding to a smooth, multi-step checkout process to secure their fresh produce.
+
+### 7. Real-Time Farmer-Consumer Chat
+![Live Chat](screenshots/chat.png)
+**Explanation:**
+A crucial feature for a direct-to-consumer platform. This real-time messaging system (powered by Socket.io) enables direct communication between consumers and farmers. Buyers can ask questions about the exact harvest date, organic certifications, or negotiate bulk pricing without leaving the application.
+
 ---
 
 ## 🌟 Present Project Features (Fully Implemented)
