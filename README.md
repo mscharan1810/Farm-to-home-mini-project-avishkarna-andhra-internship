@@ -1,22 +1,54 @@
-# Farm to Home
+# Farm to Home Mini Project (Avishkarna Andhra Internship)
 
 **Farm to Home** is a full-stack e-commerce web application that connects local farmers directly with consumers, eliminating middlemen and creating a transparent marketplace for fresh agricultural products. The platform enables farmers to showcase and sell their produce online while allowing consumers to purchase fresh, locally sourced, and high-quality products directly from the source.
 
 The application is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) and provides a seamless shopping experience for customers along with efficient inventory and order management tools for farmers. By fostering direct farmer-to-consumer interactions, the platform promotes fair pricing, sustainable agriculture, and stronger local farming communities.
 
 ## 🚀 Live Demo Credentials
-Want to test the platform quickly without registering? Use these pre-configured demo accounts:
+Want to test the platform quickly without registering? Use these pre-configured demo accounts to explore different roles:
 
-**Consumer Account:**
+**Consumer Account (For buying products):**
 * **Email:** `user@demo.com` *(or easily register your own)*
 * **Password:** `password123`
 
-**Farmer Accounts (Try different ones to see specific products!):**
+**Farmer Accounts (For selling, try different ones to see specific products!):**
 * **General Demo:** `farmer@demo.com`
 * **Vegetables & Organics:** `rattaiah@farmer.com`
 * **Fruits:** `kiran@farmer.com`
 * **Dairy:** `suresh@farmer.com`
 * **Password (for all farmers):** `password123`
+
+---
+
+## 📸 Section-by-Section Walkthrough & Screenshots
+
+### 1. Home Page (Landing Experience)
+![Home Page](screenshots/home.png)
+**Explanation:** 
+The Home Page serves as the welcoming storefront for the platform. It features a modern, hero-banner design introducing the Farm to Home concept. The page highlights the core value proposition: fresh, middleman-free produce. It also displays featured products categorized by "Best Sellers" or "Seasonal Freshness" to immediately engage users. A clear navigation bar allows users to quickly jump to the Products page or log in to their respective portals.
+
+### 2. Products Marketplace (Consumer View)
+![Products Page](screenshots/products.png)
+**Explanation:**
+This is the primary shopping interface for consumers. It presents a responsive grid layout of all available fresh produce directly sourced from registered farmers. 
+* **Filtering & Search:** Users can filter products by categories (e.g., Fruits, Vegetables, Dairy) and search for specific items.
+* **Product Details:** Each card displays the product image, farmer name, price per unit, and available stock.
+* **Interaction:** Consumers can instantly add items to their cart or view more detailed information about the product's origin and farming practices.
+
+### 3. Secure Authentication (Login/Register)
+![Login Page](screenshots/login.png)
+**Explanation:**
+The platform features a secure, dual-role authentication portal. 
+* **Role Selection:** Users must specify whether they are joining as a "Consumer" or a "Farmer". This is crucial because it determines the dashboard and permissions they receive after logging in.
+* **Security:** The system is powered by JWT token encryption, ensuring all user data, order history, and sensitive credentials are safely protected. It features form validation and instant error feedback.
+
+### 4. Farmer Dashboard (Management Portal)
+![Farmer Dashboard](screenshots/farmer_dashboard.png)
+**Explanation:**
+A dedicated, secure management panel strictly accessible by verified farmers. 
+* **Business Overview:** Farmers can track their total earnings, total orders, and active products at a glance.
+* **Order Fulfillment:** Displays incoming orders from consumers. Farmers can update the status of these orders (Pending -> Processing -> Delivered).
+* **Inventory Management:** Farmers can seamlessly add new products with images, set pricing, and update stock levels to ensure their store is always up-to-date.
 
 ---
 
@@ -30,12 +62,10 @@ Want to test the platform quickly without registering? Use these pre-configured 
 * Secure user authentication using JSON Web Tokens (JWT).
 * Separate registration and login systems for Consumers and Farmers.
 * Protected routes to prevent unauthorized access.
-* Role-based access control ensuring users can only access features relevant to their account type.
 
 ### 3. Advanced Shopping Cart and Checkout System
 * Dynamic shopping cart with automatic subtotal calculations.
 * Quantity management and delivery fee calculations.
-* Seamless checkout process with order confirmation.
 * Premium **FarmPass Membership** benefits, offering a 10% discount on purchases and free delivery on eligible orders.
 
 ### 4. Real-Time Chat System
@@ -45,31 +75,6 @@ Want to test the platform quickly without registering? Use these pre-configured 
 ### 5. Comprehensive Order Management
 * **Consumer:** View complete order history, track current status, and receive updates.
 * **Farmer:** Receive notifications for new orders, manage processing, and update statuses (Pending, Processing, Shipped, Delivered).
-
-### 6. Modern and Responsive User Interface
-* Built with **React.js** and **Vite** for fast performance.
-* Responsive design perfectly optimized for desktop, tablet, and mobile devices.
-* Smooth client-side navigation with interactive toast notifications.
-
----
-
-## 📸 Screenshots & Application Walkthrough
-
-### 1. Home Page
-![Home Page](screenshots/home.png)
-*The landing page features a modern, welcoming design introducing the Farm to Home concept, showcasing featured products, and providing easy navigation to start shopping or selling.*
-
-### 2. Products Marketplace
-![Products Page](screenshots/products.png)
-*The main shopping interface where consumers can view all available fresh produce. It features real-time filtering, responsive grid layouts, and visual badges for premium discounts.*
-
-### 3. Authentication (Login/Register)
-![Login Page](screenshots/login.png)
-*A secure, intuitive authentication portal allowing users to securely log in or register as either a Consumer or a Farmer, powered by JWT token encryption.*
-
-### 4. Farmer Dashboard
-![Farmer Dashboard](screenshots/farmer_dashboard.png)
-*A dedicated management panel strictly for verified farmers. Here, they can track their earnings, view current stock levels, process incoming orders, and manage their product listings effortlessly.*
 
 ---
 
@@ -86,7 +91,6 @@ Want to test the platform quickly without registering? Use these pre-configured 
 ### Authentication & Real-Time
 * **JSON Web Token (JWT)**
 * **Socket.io**
-* **React Context API** (State Management)
 
 ---
 
